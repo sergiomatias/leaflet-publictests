@@ -43,25 +43,25 @@ map
 setInterval(function()
 {
 	map
-.locate({
-	setView: true,
-	enableHighAccuracy: true,
-})
-// with the location found create the marker
-.on("locationfound", (e) => {
-	console.log(e);
-	// marker
-	const marker = L.marker([e.latitude, e.longitude]).bindPopup(
-		"nou"
-	);
-	
-	// add marker
-	map.addLayer(marker);
-	document.getElementById("log").innerHTML += "new marquer (" + e.latitude + "," + e.longitude + ")<br> ";
-	
-})
-// On error do alert
-.on("locationerror", (e) => {
-	console.log(e);
-});
-}, 10000);
+		.locate({
+			setView: true,
+			enableHighAccuracy: true,
+		})
+		// with the location found create the marker
+		.on("locationfound", (e) => {
+			console.log(e);
+			// marker
+			const marker = L.marker([e.latitude, e.longitude]).bindPopup(
+				"nou"
+			);
+			
+			// add marker
+			map.addLayer(marker);
+			document.getElementById("log").innerHTML += "new marker (" + e.latitude + "," + e.longitude + ")<br> ";
+			
+		})
+		// On error do alert
+		.on("locationerror", (e) => {
+			console.log(e);
+		});
+}, 60000);
