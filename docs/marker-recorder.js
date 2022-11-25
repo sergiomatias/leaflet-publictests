@@ -36,7 +36,7 @@ map
 	// On error do alert
 	.on("locationerror", (e) => {
 		console.log(e);
-		alert("Location access denied.");
+		
 	});
 
 
@@ -57,10 +57,11 @@ setInterval(function()
 	
 	// add marker
 	map.addLayer(marker);
+	document.getElementById("log").innerHTML += "new marquer (" + e.latitude + "," + e.longitude + ")<br> ";
+	
 })
 // On error do alert
 .on("locationerror", (e) => {
 	console.log(e);
-	alert("Location access denied.");
 });
 }, 10000);
