@@ -39,3 +39,28 @@ map
 		alert("Location access denied.");
 	});
 
+
+setInterval(function()
+{
+	map
+.locate({
+	setView: true,
+	enableHighAccuracy: true,
+})
+// with the location found create the marker
+.on("locationfound", (e) => {
+	console.log(e);
+	// marker
+	const marker = L.marker([e.latitude, e.longitude]).bindPopup(
+		"nou"
+	);
+	
+	// add marker
+	map.addLayer(marker);
+})
+// On error do alert
+.on("locationerror", (e) => {
+	console.log(e);
+	alert("Location access denied.");
+});
+}, 10000);
