@@ -17,46 +17,11 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 		'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
-var lineGroup = L.layerGroup()
-var markerGroup = L.layerGroup()
-
-UpdateMarker();
-
-
 var points = new Array();
+var lineGroup = L.layerGroup();
+var marker = null;
 
-function Start(lineGroup, markerGroup)
-{
-	AddPoint();
-	document.getElementById("start").setAttribute('data-run','1');
-	document.getElementById("log").innerHTML += "Started<br> ";
-
-	setInterval(function()
-	{
-		AddPoint(lineGroup);
-		UpdateMarker(markerGroup);
-	}, 30000);
-
-	document.getElementById("start").style.display = "none";
-	document.getElementById("stop").style.display = "block";
-}
-
-function Stop(lineGroup, markerGroup) 
-{
-	clearInterval();
-	AddPoint(lineGroup);
-	UpdateMarker(markerGroup);
-
-	document.getElementById("start").removeAttribute('data-run');
-	document.getElementById("log").innerHTML += "Stopped<br> ";
-
-	document.getElementById("start").style.display = "block";
-	document.getElementById("stop").style.display = "none";
-}
-
-function UpdateMarker(markerGroup) 
-{
-	map
+map
 	.locate({
 		setView: true,
 		enableHighAccuracy: true,
@@ -64,27 +29,80 @@ function UpdateMarker(markerGroup)
 	// with the location found create the marker
 	.on("locationfound", (e) => {
 		console.log(e);
+
 		// marker
-		const marker = L.marker([e.latitude, e.longitude]).bindPopup(
+		marker = L.marker([e.latitude, e.longitude]).bindPopup(
 			"nou"
 		);
 		
-		markerGroup.removeFrom(map);
-
 		// add marker
-		markerGroup.addLayer(marker);
-		markerGroup.addTo(map);
+		map.addLayer(marker);
+		
+		// point to list
+		points.push([e.latitude, e.longitude ])
+		document.getElementById("log").innerHTML += "new marker (" + e.latitude + "," + e.longitude + ")<br> ";
 	})
 	// On error do alert
 	.on("locationerror", (e) => {
 		console.log(e);
-		
 	});
+
+UpdateMarker();
+
+
+
+function Start()
+{
+	AddPoint();
+	document.getElementById("start").setAttribute('data-run','1');
+	document.getElementById("log").innerHTML += "Started<br> ";
+
+	setInterval(function()
+	{
+		AddPoint();
+		UpdateMarker();
+	}, 30000);
+
+	document.getElementById("start").style.display = "none";
+	document.getElementById("stop").style.display = "block";
 }
 
-function AddPoint (lineGroup)
+function Stop() 
 {
-	if (document.getElementById("start").hasAttribute("data-run")) {
+	clearInterval();
+	AddPoint();
+	document.getElementById("start").removeAttribute('data-run');
+	document.getElementById("log").innerHTML += "Stopped<br> ";
+	
+	document.getElementById("start").style.display = "block";
+	document.getElementById("stop").style.display = "none";
+}
+
+function UpdateMarker() 
+{
+	map
+		.locate({
+			setView: true,
+			enableHighAccuracy: true,
+		})
+		// with the location found create the marker
+		.on("locationfound", (e) => {
+			console.log(e);
+
+			// marker
+			marker.setLatLng(new L.LatLng(e.latitude, e.longitude));
+		})
+		// On error do alert
+		.on("locationerror", (e) => {
+			console.log(e);
+		});
+}
+
+function AddPoint ()
+{
+	if (document.getElementById("start").hasAttribute("data-run")) 
+	{
+
 		map
 		.locate({
 			setView: true,
@@ -112,10 +130,12 @@ function AddPoint (lineGroup)
 		.on("locationerror", (e) => {
 			console.log(e);
 		});
+
+		ShowRoute();
 	}
 }
 
-function showRoute () 
+function ShowRoute() 
 {	
 	// Clean map layer
 	lineGroup.removeFrom(map);
