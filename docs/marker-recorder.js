@@ -42,7 +42,7 @@ var MapRouting = (function ()
 					
 					// point to list
 					points.push([e.latitude, e.longitude ])
-					document.getElementById("log").innerHTML += "new marker (" + e.latitude + "," + e.longitude + ")<br> ";
+					MapRouting.setLog("Starter marker (" + e.latitude + "," + e.longitude + ")<br>");
 				})
 				// On error do alert
 				.on("locationerror", (e) => {
@@ -63,6 +63,7 @@ var MapRouting = (function ()
 
 					// marker
 					marker.setLatLng(new L.LatLng(e.latitude, e.longitude));
+					MapRouting.setLog("Updated location marker (" + e.latitude + "," + e.longitude + ")<br>");
 				})
 				// On error do alert
 				.on("locationerror", (e) => {
@@ -75,7 +76,7 @@ var MapRouting = (function ()
 			MapRouting.addPoint();
 
 			document.getElementById("start").setAttribute('data-run','1');
-			document.getElementById("log").innerHTML += "Started<br> ";
+			MapRouting.setLog("Started<br>");
 
 			setInterval(function()
 			{
@@ -92,7 +93,7 @@ var MapRouting = (function ()
 			clearInterval();
 			MapRouting.addPoint();
 			document.getElementById("start").removeAttribute('data-run');
-			document.getElementById("log").innerHTML += "Stopped<br> ";
+			MapRouting.setLog("Stopped<br>");
 			
 			document.getElementById("start").style.display = "block";
 			document.getElementById("stop").style.display = "none";
@@ -124,7 +125,7 @@ var MapRouting = (function ()
 					
 					// point to list
 					points.push([e.latitude, e.longitude ])
-					document.getElementById("log").innerHTML += "new marker (" + e.latitude + "," + e.longitude + ")<br> ";
+					MapRouting.setLog("New point (" + e.latitude + "," + e.longitude + ")<br> ");
 				})
 				// On error do alert
 				.on("locationerror", (e) => {
@@ -151,8 +152,13 @@ var MapRouting = (function ()
 			}));
 			
 			lineGroup.addTo(map);
+		},
+
+		setLog: function (log) 
+		{
+			document.getElementById("log").innerHTML += log;
 		}
-};
+	};
 
 	return _MapRouting;
 
