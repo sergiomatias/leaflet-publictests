@@ -5,7 +5,7 @@ var MapRouting = (function ()
 	var lineGroup = L.layerGroup();
 	var markersGroup = L.layerGroup();
 	var mapInterval = null;
-	var intervalUpdate = 15000;
+	var intervalUpdate = 30000;
 
 	var _MapRouting = {
 
@@ -49,7 +49,7 @@ var MapRouting = (function ()
 					// Add new map layer
 					markersGroup = L.layerGroup()
 				
-					// Add poligns
+					// Add poligons
 					markersGroup.addLayer(L.marker([e.latitude, e.longitude]).bindPopup(
 						"My position"
 					));
@@ -117,7 +117,7 @@ var MapRouting = (function ()
 			}, intervalUpdate);
 
 			document.getElementById("start").style.display = "none";
-			document.getElementById("stop").style.display = "block";
+			document.getElementById("stop").style.display = "inline-block";
 		},
 
 		stop: function() 
@@ -128,7 +128,7 @@ var MapRouting = (function ()
 			document.getElementById("start").removeAttribute('data-run');
 			MapRouting.setLog("Stopped<br>");
 			
-			document.getElementById("start").style.display = "block";
+			document.getElementById("start").style.display = "inline-block";
 			document.getElementById("stop").style.display = "none";
 		},
 

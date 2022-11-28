@@ -31,7 +31,20 @@ body
   background-color: #f1f1f1;
 }
 
-.log {
+.log 
+{
   height: 20%;
   overflow: auto;
+}
+
+.btn 
+{
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 20px;
+  background-color: #fff;
+  color: #000;
+  border-radius: 2px;
+  text-decoration: none;
 }
