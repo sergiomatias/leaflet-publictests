@@ -25,7 +25,7 @@ UpdateMarker();
 
 var points = new Array();
 
-function Start()
+function Start(lineGroup, markerGroup)
 {
 	AddPoint();
 	document.getElementById("start").setAttribute('data-run','1');
@@ -33,20 +33,28 @@ function Start()
 
 	setInterval(function()
 	{
-		AddPoint();
-		UpdateMarker();
+		AddPoint(lineGroup);
+		UpdateMarker(markerGroup);
 	}, 30000);
+
+	document.getElementById("start").style.display = "none";
+	document.getElementById("stop").style.display = "block";
 }
 
-function Stop() 
+function Stop(lineGroup, markerGroup) 
 {
 	clearInterval();
-	AddPoint();
+	AddPoint(lineGroup);
+	UpdateMarker(markerGroup);
+
 	document.getElementById("start").removeAttribute('data-run');
 	document.getElementById("log").innerHTML += "Stopped<br> ";
+
+	document.getElementById("start").style.display = "block";
+	document.getElementById("stop").style.display = "none";
 }
 
-function UpdateMarker() 
+function UpdateMarker(markerGroup) 
 {
 	map
 	.locate({
@@ -74,7 +82,7 @@ function UpdateMarker()
 	});
 }
 
-function AddPoint ()
+function AddPoint (lineGroup)
 {
 	if (document.getElementById("start").hasAttribute("data-run")) {
 		map
