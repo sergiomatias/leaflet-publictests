@@ -3,6 +3,7 @@ var MapRouting = (function ()
 	var map = null;
 	var points = new Array();
 	var lineGroup = L.layerGroup();
+	var markersGroup = L.layerGroup();
 	var marker = null;
 
 	var _MapRouting = {
@@ -31,7 +32,7 @@ var MapRouting = (function ()
 				// with the location found create the marker
 				.on("locationfound", (e) => {
 					console.log(e);
-			
+					/*
 					// marker
 					marker = L.marker([e.latitude, e.longitude]).bindPopup(
 						"nou"
@@ -39,9 +40,22 @@ var MapRouting = (function ()
 					
 					// add marker
 					map.addLayer(marker);
+					*/
+
+					// Clean map layer
+					markersGroup.removeFrom(map);
+				
+					// Add new map layer
+					markersGroup = L.layerGroup()
+				
+					// Add poligns
+					markersGroup.addLayer(L.marker([e.latitude, e.longitude]).bindPopup(
+						"nou"
+					));
 					
+					markersGroup.addTo(map);
+
 					// point to list
-					points.push([e.latitude, e.longitude ])
 					MapRouting.setLog("Starter marker (" + e.latitude + "," + e.longitude + ")<br>");
 				})
 				// On error do alert
@@ -61,8 +75,19 @@ var MapRouting = (function ()
 				.on("locationfound", (e) => {
 					console.log(e);
 
-					// marker
-					marker.setLatLng(new L.LatLng(e.latitude, e.longitude));
+					// Clean map layer
+					markersGroup.removeFrom(map);
+				
+					// Add new map layer
+					markersGroup = L.layerGroup()
+				
+					// Add poligns
+					markersGroup.addLayer(L.marker([e.latitude, e.longitude]).bindPopup(
+						"nou"
+					));
+					
+					markersGroup.addTo(map);
+					
 					MapRouting.setLog("Updated location marker (" + e.latitude + "," + e.longitude + ")<br>");
 				})
 				// On error do alert
@@ -90,7 +115,6 @@ var MapRouting = (function ()
 
 		Stop: function() 
 		{
-			clearInterval();
 			MapRouting.addPoint();
 			document.getElementById("start").removeAttribute('data-run');
 			MapRouting.setLog("Stopped<br>");
@@ -103,7 +127,6 @@ var MapRouting = (function ()
 		{
 			if (document.getElementById("start").hasAttribute("data-run")) 
 			{
-		
 				map
 				.locate({
 					setView: true,
@@ -124,15 +147,19 @@ var MapRouting = (function ()
 					*/
 					
 					// point to list
-					points.push([e.latitude, e.longitude ])
+					points.push([e.latitude, e.longitude]);
+					MapRouting.showRoute();
+
 					MapRouting.setLog("New point (" + e.latitude + "," + e.longitude + ")<br> ");
 				})
 				// On error do alert
 				.on("locationerror", (e) => {
 					console.log(e);
 				});
-		
-				MapRouting.showRoute();
+	
+			} else 
+			{
+				clearInterval();
 			}
 		},
 		
