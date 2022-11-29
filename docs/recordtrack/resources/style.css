@@ -8,7 +8,7 @@
 html 
 {
 	height: 100%;
-	font: "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif;
+	font-family: "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif;
 }
 
 body, html
