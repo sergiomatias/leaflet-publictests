@@ -1,8 +1,10 @@
 # Leaftlet Public Tests
 
-Some functions implementations
-
-- Implementation  - https://sergiomatias.github.io/leaflet-publictests/index.html
+This is playground to try leaftlet implementations.
 
 
-Some implementains
+## Record track
+
+Record the run path of a user using a browser and leaflet, creating a visual hit using a polygon
+
+- https://sergiomatias.github.io/leaflet-publictests/recordtrack
