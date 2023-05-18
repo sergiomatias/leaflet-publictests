@@ -1,4 +1,4 @@
-# Leaftlet Public Tests
+# Leaflet Public Tests
 
 This is a playground to try Leaflet implementations.
 
