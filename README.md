@@ -1,6 +1,6 @@
 # Leaftlet Public Tests
 
-This is a playground to try leaftlet implementations.
+This is a playground to try Leaflet implementations.
 
 
 ## Record track
